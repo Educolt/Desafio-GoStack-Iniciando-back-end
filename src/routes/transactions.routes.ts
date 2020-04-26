@@ -29,7 +29,7 @@ transactionsRouter.post('/', async (request, response) => {
 
   const createTransactionService = new CreateTransactionService();
 
-  const transaction = createTransactionService.execute({
+  const transaction = await createTransactionService.execute({
     title,
     value,
     type,
@@ -55,7 +55,9 @@ transactionsRouter.post(
   async (request, response) => {
     const importTransactionsService = new ImportTransactionsService();
 
-    const transactions = importTransactionsService.execute(request.file.path);
+    const transactions = await importTransactionsService.execute(
+      request.file.path,
+    );
 
     return response.json(transactions);
   },
